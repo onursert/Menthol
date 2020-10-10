@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Search</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 my-3">
+                    <div th:if="${not #lists.isEmpty(subjects)}"
+                         th:each="subject : ${subjects}"
+                         class="list-group"
+                    >
+                        <a th:text="${subject.getName()}"
+                           th:href="${'/user/search/subject/' + subject.getId()}"
+                           class="list-group-item list-group-item-action list-group-item-info"
+                        >
+                            Subject
+                        </a>
+                        <a th:each="subSubject : ${subject.getSubSubjects()}"
+                           th:text="${subSubject.getName()}"
+                           th:href="${'/user/search/subSubject/' + subSubject.getId()}"
+                           class="list-group-item list-group-item-action ml-2"
+                        >
+                            SubSubject
+                        </a>
+                        <div class="mb-2"></div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <h2 class="display-4 my-3">Search for Programs / Mentors</h2>
+                    <div th:if="${not #lists.isEmpty(programs)}">
+                        <table class="table table-striped">
+                            <tr>
+                                <th class="lead">Id</th>
+                                <th class="lead">Mentor Id</th>
+
+                                <th class="lead">Mentee Id</th>
+                                <th class="lead">Accepted</th>
+
+                                <th class="lead">Subject</th>
+                                <th class="lead">SubSubject</th>
+                                <th class="lead">Description</th>
+                                <th class="lead">Join</th>
+                            </tr>
+                            <tr th:each="program : ${programs}">
+                                <td th:text="${program.getId()}">Id</td>
+                                <td th:text="${program.getMentorUid()}">Mentor Id</td>
+
+                                <td th:text="${program.getMenteeUid()}">Mentee Id</td>
+                                <td th:text="${program.getAccepted()}">Accepted</td>
+
+                                <td th:text="${program.getProgramSubjects()[0].getSubject().getName()}">
+                                    Subject
+                                </td>
+
+                                <td>
+                                    <p th:each="programSubject : ${program.getProgramSubjects()}"
+                                       th:text="${programSubject.getSubSubject().getName()}"
+                                    >
+                                        SubSubject
+                                    </p>
+                                </td>
+
+                                <td th:text="${program.getDescription()}">Description</td>
+
+                                <td><a th:href="${'/user/search/join/' + program.getId()}" class="btn btn-success">Join</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

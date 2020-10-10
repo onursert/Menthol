@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>Admin Dashboard - Subject / SubSubject Edit</title>
+    </head>
+    <body>
+        <th:block th:include="admin/layout/header" />
+
+        <div class="container">
+            <div>
+                <h2 class="display-4 my-3">Edit Subject / SubSubject</h2>
+                <form class="form-horizontal" th:object="${subject}" th:action="@{/admin/subject/list}" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="hidden" class="form-control lead" th:field="*{id}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label lead" for="name">Name: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control lead" th:field="*{name}" id="name" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <label class="col-sm-2 control-label lead">SubSubjects: </label>
+                <form class="form-horizontal"
+                      th:action="@{/admin/subject/sub_subject_update}"
+                      method="post"
+                      enctype="multipart/form-data"
+                >
+                    <input name="subjectId" type="hidden" class="form-control lead" th:value="${subject.getId()}" />
+                    <div class="d-flex flex-row" th:each="subSubject : ${subject.getSubSubjects()}">
+                        <input name="subSubjectId" type="hidden" class="form-control lead" th:value="${subSubject.getId()}" />
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <input name="subSubjectName" type="text" class="form-control lead" th:value="${subSubject.getName()}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <td><a th:href="${'/admin/subject/sub_subject_delete/' + subSubject.getId()}" class="btn btn-danger">Delete</a></td>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex flex-row">
+                        <label class="col-sm-2 control-label lead" for="addSubSubject">Add SubSubjects: </label>
+                        <div class="col-sm-4">
+                            <input placeholder="subSubject1,subSubject2,..." name="newSubSubjects" type="text" class="form-control lead" id="addSubSubject" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </body>
+</html>

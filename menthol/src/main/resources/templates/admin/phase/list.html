@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>Admin Dashboard - Program Phases</title>
+    </head>
+    <body>
+        <th:block th:include="admin/layout/header" />
+
+        <div class="container-fluid">
+
+            <h2 class="display-4 my-3">Program</h2>
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Mentor Id</th>
+                        <th class="lead">Mentee Id</th>
+                        <th class="lead">Subject</th>
+                        <th class="lead">SubSubject</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${program.getId()}">Id</td>
+                        <td th:text="${program.getMentorUid()}">Mentor</td>
+                        <td th:text="${program.getMenteeUid()}">Mentee</td>
+
+                        <td th:text="${program.getProgramSubjects()[0].getSubject().getName()}">
+                            Subject
+                        </td>
+
+                        <td>
+                            <p th:each="programSubSubject : ${program.getProgramSubjects()}"
+                               th:text="${programSubSubject.getSubSubject().getName()}"
+                            >
+                                SubSubject
+                            </p>
+                        </td>
+
+                        <td th:text="${program.getDescription()}">Description</td>
+
+                        <td th:text="${#calendars.format(new java.util.Date(program.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}">Start Date</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2 class="display-4 my-3">Phases / Process</h2>
+            <div th:if="${not #lists.isEmpty(phases)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                        <th class="lead">End Date</th>
+                        <th class="lead">Mentor Comment</th>
+                        <th class="lead">Mentor Point</th>
+                        <th class="lead">Mentee Comment</th>
+                        <th class="lead">Mentee Point</th>
+                        <th class="lead">Started</th>
+                        <th class="lead">Ended</th>
+                    </tr>
+                    <tr th:each="phase : ${phases}">
+                        <td th:text="${phase.getId()}">Id</td>
+
+                        <td th:text="${phase.getDescription()}">Description</td>
+
+                        <td th:if="${phase.getStartDate()} != null"
+                            th:text="${#dates.format(new java.util.Date(phase.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}"
+                        >
+                            Start Date
+                        </td>
+                        <td th:if="${phase.getStartDate()} == null">Not Ended</td>
+
+                        <td th:if="${phase.getEndDate()} != null"
+                            th:text="${#dates.format(new java.util.Date(phase.getEndDate() * 1000L), 'dd/MM/yyyy - HH:mm')}"
+                        >
+                            End Date
+                        </td>
+                        <td th:if="${phase.getEndDate()} == null">Not Set</td>
+
+                        <td th:if="${phase.getEnded()}" th:text="${phase.getMentorComment()}">Mentor Comment</td>
+                        <td th:if="${!phase.getEnded()}">No Comment</td>
+
+                        <td th:if="${phase.getEnded()}" th:text="${phase.getMentorPoint()}">Mentor Point</td>
+                        <td th:if="${!phase.getEnded()}">No Point</td>
+
+                        <td th:if="${phase.getEnded()}" th:text="${phase.getMenteeComment()}">Mentee Comment</td>
+                        <td th:if="${!phase.getEnded()}">No Comment</td>
+
+                        <td th:if="${phase.getEnded()}" th:text="${phase.getMenteePoint()}">Mentee Point</td>
+                        <td th:if="${!phase.getEnded()}">No Point</td>
+
+                        <td th:text="${phase.getStarted()}">Started</td>
+
+                        <td th:text="${phase.getEnded()}">Ended</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Program Phases</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container-fluid">
+
+            <h2 class="display-4 my-3">My Program</h2>
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Mentor</th>
+                        <th class="lead">Mentee</th>
+                        <th class="lead">Subject</th>
+                        <th class="lead">SubSubject</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${program.getId()}">Id</td>
+                        <td th:text="${program.getMentorUid()}">Mentor</td>
+                        <td th:text="${program.getMenteeUid()}">Mentee</td>
+
+                        <td th:text="${program.getProgramSubjects()[0].getSubject().getName()}">
+                            Subject
+                        </td>
+
+                        <td>
+                            <p th:each="programSubSubject : ${program.getProgramSubjects()}"
+                               th:text="${programSubSubject.getSubSubject().getName()}"
+                            >
+                                SubSubject
+                            </p>
+                        </td>
+
+                        <td th:text="${program.getDescription()}">Description</td>
+
+                        <td th:text="${#calendars.format(new java.util.Date(program.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}">Start Date</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="d-flex">
+                <div class="mr-auto">
+                    <h2 class="display-4 my-3">Phases / Process</h2>
+                </div>
+                <div th:if="${program.getEnded()} == false" class="mt-5">
+                    <a th:href="${'/user/phase/add/' + program.getId()}" class="btn btn-info">Add Phase / Plan Process</a>
+                </div>
+                <div th:if="${program.getEnded()} == true" class="mt-5">
+                    <p>Program is Completed.</p>
+                </div>
+            </div>
+            <div th:if="${not #lists.isEmpty(phases)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                        <th class="lead">End Date</th>
+                        <th class="lead">Mentor Comment</th>
+                        <th class="lead">Mentor Point</th>
+                        <th class="lead">Mentee Comment</th>
+                        <th class="lead">Mentee Point</th>
+                        <th class="lead">Start</th>
+                        <th class="lead">Edit</th>
+                        <th class="lead">Status</th>
+                        <th class="lead">Finish and Comment</th>
+                    </tr>
+                    <tr th:each="phase : ${phases}">
+                        <td th:text="${phase.getId()}">Id</td>
+
+                        <td th:text="${phase.getDescription()}">Description</td>
+
+                        <td th:if="${phase.getStartDate()} != null"
+                            th:text="${#dates.format(new java.util.Date(phase.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}"
+                        >
+                            Start Date
+                        </td>
+                        <td th:if="${phase.getStartDate()} == null">Not Ended</td>
+
+                        <td th:if="${phase.getEndDate()} != null"
+                            th:text="${#dates.format(new java.util.Date(phase.getEndDate() * 1000L), 'dd/MM/yyyy - HH:mm')}"
+                        >
+                            End Date
+                        </td>
+                        <td th:if="${phase.getEndDate()} == null">Not Set</td>
+
+                        <td th:text="${phase.getMentorComment()}">Mentor Comment</td>
+
+                        <td th:text="${phase.getMentorPoint()}">Mentor Point</td>
+
+                        <td th:text="${phase.getMenteeComment()}">Mentee Comment</td>
+
+                        <td th:text="${phase.getMenteePoint()}">Mentee Point</td>
+
+                        <td th:if="${program.getEnded()}"><p>Program is Finished.</p></td>
+                        <td th:if="${!program.getEnded()} and ${!phase.getEnded()} and ${!phase.getStarted()}">
+                            <a th:href="${'/user/phase/start/' + phase.getId()}" class="btn btn-success">Start</a>
+                        </td>
+                        <td th:if="${!program.getEnded()} and ${!phase.getEnded()} and ${phase.getStarted()}"><p>Started</p></td>
+                        <td th:if="${!program.getEnded()} and ${phase.getEnded()} and ${!phase.getStarted()}">
+                            <a th:href="${'/user/phase/start/' + phase.getId()}" class="btn btn-success">Start</a>
+                        </td>
+                        <td th:if="${!program.getEnded()} and ${phase.getEnded()} and ${phase.getStarted()}"><p>Finished</p></td>
+
+                        <td th:if="${program.getEnded()}"><p>Program is Finished.</p></td>
+                        <td th:if="${!program.getEnded()} and ${!phase.getEnded()} and ${phase.getStarted()}">
+                            <a th:href="${'/user/phase/edit/' + phase.getId()}" class="btn btn-primary">Edit</a>
+                        </td>
+                        <td th:if="${!program.getEnded()}" th:unless="${!phase.getEnded()} and ${phase.getStarted()}"><p>Closed</p></td>
+
+                        <td th:if="${program.getEnded()}"><p>Program is Finished.</p></td>
+                        <td th:if="${!program.getEnded()} and ${!phase.getEnded()} and ${!phase.getStarted()}"><p>Not Started</p></td>
+                        <td th:if="${!program.getEnded()} and ${!phase.getEnded()} and ${phase.getStarted()}"><p>Started</p></td>
+                        <td th:if="${!program.getEnded()} and ${phase.getEnded()} and ${!phase.getStarted()}"><p>Closed</p></td>
+                        <td th:if="${!program.getEnded()} and ${phase.getEnded()} and ${phase.getStarted()}"><p>Finished</p></td>
+
+                        <td>
+                            <a th:href="${'/user/phase/finish/' + phase.getId()}" class="btn btn-warning">Finish and Comment</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </body>
+</html>

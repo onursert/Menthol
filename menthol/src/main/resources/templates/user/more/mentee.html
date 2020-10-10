@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Menteeships</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container-fluid">
+            <h2 class="display-4 my-3">All My Menteeships</h2>
+            <div th:if="${not #lists.isEmpty(programs)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Mentor</th>
+                        <th class="lead">Mentee</th>
+                        <th class="lead">Subject</th>
+                        <th class="lead">SubSubject</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                        <th class="lead">Accepted</th>
+                        <th class="lead">Status</th>
+                        <th class="lead">Phases</th>
+                    </tr>
+                    <tr th:each="program : ${programs}">
+                        <td th:text="${program.getId()}">Id</td>
+                        <td th:text="${program.getMentorUid()}">Mentor</td>
+                        <td th:text="${program.getMenteeUid()}">Mentee</td>
+
+                        <td th:text="${program.getProgramSubjects()[0].getSubject().getName()}">
+                            Subject
+                        </td>
+
+                        <td>
+                            <p th:each="programSubject : ${program.getProgramSubjects()}"
+                               th:text="${programSubject.getSubSubject().getName()}"
+                            >
+                                SubSubject
+                            </p>
+                        </td>
+
+                        <td th:text="${program.getDescription()}">Description</td>
+
+                        <td th:if="${program.getStartDate()} != null" th:text="${#dates.format(new java.util.Date(program.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}">Start Date</td>
+                        <td th:if="${program.getStartDate()} == null">Not Started</td>
+
+                        <td th:if="${program.getAccepted()} == true">Accepted</td>
+                        <td th:if="${program.getAccepted()} == false"><p>Not Accepted</p></td>
+
+                        <td th:if="${program.getEnded()} == true"><p>Ended</p></td>
+                        <td th:if="${program.getEnded()} == false and ${program.getAccepted()} == false"><p>Not Accepted</p></td>
+                        <td th:if="${program.getEnded()} == false and ${program.getAccepted()} == true and ${currentUser} == ${program.getMentorUid()} and ${program.getRequestAccept()} == false and ${program.getMenteeUid()} == null"><p>Not Requested</p></td>
+                        <td th:if="${program.getEnded()} == false and ${program.getAccepted()} == true and ${currentUser} == ${program.getMentorUid()} and ${program.getRequestAccept()} == false and ${program.getMenteeUid()} != null">
+                            <a th:href="${'/user/request/accept/' + program.getId()}" class="btn btn-success">Accept</a>
+                        </td>
+                        <td th:if="${program.getEnded()} == false and ${program.getAccepted()} == true and ${currentUser} == ${program.getMentorUid()} and ${program.getRequestAccept()} == true and ${program.getMenteeUid()} != null">
+                            <a th:href="${'/user/request/program_end/' + program.getId()}" class="btn btn-danger">Finish</a>
+                        </td>
+
+                        <td th:if="${program.getEnded()} == false and ${currentUser} == ${program.getMenteeUid()} and ${program.getRequestAccept()} == true"><p>Request Accepted</p></td>
+                        <td th:if="${program.getEnded()} == false and ${currentUser} == ${program.getMenteeUid()} and ${program.getRequestAccept()} == false"><p>Requested</p></td>
+
+                        <td th:if="${program.getAccepted()} == false"><p>Not Accepted</p></td>
+                        <td th:if="${program.getAccepted()} == true and ${program.getRequestAccept()} == false and ${program.getMenteeUid()} == null">
+                            <p>Not Requested</p>
+                        </td>
+                        <td th:if="${program.getAccepted()} == true and ${program.getRequestAccept()} == false and ${program.getMenteeUid()} != null">
+                            <p>Requested</p>
+                        </td>
+                        <td th:if="${program.getAccepted()} == true and ${program.getRequestAccept()} == true">
+                            <a th:if="${program.getEnded()} == false" th:href="${'/user/phase/list/' + program.getId()}" class="btn btn-info">Phase</a>
+                            <a th:if="${program.getEnded()} == true" th:href="${'/user/phase/list/' + program.getId()}" class="btn btn-info">Old Phases</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+dn: dc=obss,dc=com
+objectclass: top
+objectclass: domain
+objectclass: extensibleObject
+dc: obss
+
+dn: ou=groups,dc=obss,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+
+dn: uid=onur,ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Onur Sert
+sn: Sert
+uid: onur
+description: EMAIL
+userPassword: {SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=
+
+dn: uid=ali,ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Ali Veli
+sn: Veli
+uid: ali
+description: EMAIL
+userPassword: {SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=
+
+dn: uid=ahmet,ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Ahmet Veli
+sn: Vei
+uid: ahmet
+description: EMAIL
+userPassword: {SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=
+
+dn: uid=116915129957870596898,ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: 116915129957870596898
+sn: 116915129957870596898
+uid: 116915129957870596898
+description: EMAIL
+userPassword: {SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=
+
+dn: uid=mehmet,ou=people,dc=obss,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Mehmet Veli
+sn: Veli
+uid: mehmet
+description: EMAIL
+userPassword: {SHA}5en6G6MezRroT3XKqkdPOmY/BfQ=
+
+
+dn: cn=admin,ou=groups,dc=obss,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: admin
+ou: admin
+uniqueMember: uid=onur,ou=people,dc=obss,dc=com
+
+dn: cn=user,ou=groups,dc=obss,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: user
+ou: user
+uniqueMember: uid=ali,ou=people,dc=obss,dc=com
+uniqueMember: uid=ahmet,ou=people,dc=obss,dc=com
+uniqueMember: uid=mehmet,ou=people,dc=obss,dc=com
+uniqueMember: uid=116915129957870596898,ou=people,dc=obss,dc=com

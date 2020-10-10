@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Program Phase Add</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container">
+            <div>
+                <h2 class="display-4 my-3">Add Program Phase</h2>
+                <form class="form-horizontal" th:action="@{/user/phase/add}" method="post">
+                    <input type="hidden" class="form-control lead" th:value="${program.getId()}" name="programId" required />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label lead" for="description">Description: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control lead" id="description" name="description" required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 ml-3">
+                            <div class="form-group">
+                                <label class="control-label lead" for="startDate">Start Date: </label>
+                                <div>
+                                    <input type="date" min="1000-01-01" max="3000-12-31" class="form-control lead" id="startDate" name="startDate" required />
+                                    <script>startDate.min = new Date().toISOString().split("T")[0];</script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="startHour">Hour: </label>
+                                <input placeholder="00-23" type="text" class="form-control lead" id="startHour" name="startHour" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="startMinute">Minute: </label>
+                                <input placeholder="00-59" type="text" class="form-control lead" id="startMinute" name="startMinute" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 ml-3">
+                            <div class="form-group">
+                                <label class="control-label lead" for="endDate">End Date: </label>
+                                <div>
+                                    <input type="date" min="1000-01-01" max="3000-12-31" class="form-control lead" id="endDate" name="endDate" required />
+                                    <script>endDate.min = new Date().toISOString().split("T")[0];</script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="endHour">Hour: </label>
+                                <input placeholder="00-23" type="text" class="form-control lead" id="endHour" name="endHour" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="endMinute">Minute: </label>
+                                <input placeholder="00-59" type="text" class="form-control lead" id="endMinute" name="endMinute" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <link rel="icon" th:href="@{img/logo.png}" />
+        <title>Menthol - Mentors and Mentees</title>
+    </head>
+
+    <style>
+        .block form {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 550px;
+            background: ghostwhite;
+            border-radius: 5px;
+        }
+    </style>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md mt-5">
+                    <main>
+                        <h1 class="my-3 display-1">Menthol</h1>
+                        <h5 class="my-3 display-4">Platform for Mentors and Mentees.</h5>
+                    </main>
+                </div>
+                <div class="col-md">
+                    <div class="block">
+                        <form action="/login" method="post">
+                            <h2 class="display-4 text-center">Log In</h2><br>
+
+                            <div th:if="${param.error}">
+                                <p class="lead text-center"><small style="color:red;">Invalid username or password.</small></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="lead" for="username">Username</label>
+                                <input type="text" name="username" id="username" autocomplete="off" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="lead" for="password">Password</label>
+                                <input type="password" name="password" id="password" class="form-control" required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" name="login-submit" class="btn btn-success btn-lg">Log in</button>
+                            </div>
+
+                            <hr class="m-3" />
+
+                            <div class="form-group text-center">
+                                <a th:href="${'/login/oauth2/code/google'}" class="btn btn-primary btn-lg"><i class="fab fa-google mr-2"></i> Log in with Google</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="m-5">
+
+        <div class="container-fluid">
+            <div class="content text-center mx-3 my-5">
+                <h2 class="m-3 display-4">Design with Love and Spring 🍂</h2>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-8">
+                        <p class="lead">The Spring Framework is an application framework and inversion of control container for the Java platform. The framework's core features can be used by any Java application, but there are extensions for building web applications on top of the Java EE (Enterprise Edition) platform. Although the framework does not impose any specific programming model, it has become popular in the Java community as an addition to the Enterprise JavaBeans (EJB) model. The Spring Framework is open source.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="m-5">
+
+        <div class="container-fluid">
+            <div class="feature text-center mx-3 my-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img th:src="@{img/modern_design.png}" style="width: 100px; height: auto; margin: 10px auto;">
+                            <div class="card-body">
+                                <h3 class="card-title display-4">Modern Design</h3>
+                                <p class="card-text lead">Minimalistic design with user-friendly interface.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img th:src="@{img/cloud.png}" style="width: 100px; height: auto; margin: 10px auto;">
+                            <div class="card-body">
+                                <h3 class="card-title display-4">Cloud</h3>
+                                <p class="card-text lead">All your works can be saved on cloud.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img th:src="@{img/simple.png}" style="width: 100px; height: auto; margin: 10px auto;">
+                            <div class="card-body">
+                                <h3 class="card-title display-4">Simple</h3>
+                                <p class="card-text lead">Easy to use and user-friendly platform with many cool features.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="m-5">
+
+        <footer class="container mx-auto">
+            <p style="display: table; margin: 5px auto;">Design: Onur Sert</p>
+            <p style="display: table; margin: 5px auto;"><a class="btn btn-outline-dark btn-sm" href="https://onursert.org/">Contact</a></p>
+            <br>
+        </footer>
+    </body>
+</html>

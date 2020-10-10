@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>Admin Dashboard - Subjects</title>
+    </head>
+
+    <body>
+        <th:block th:include="admin/layout/header" />
+
+        <div th:if="${success != null}"
+             style="position: fixed; top: 65px; right: 10px; z-index: 10;"
+             class="alert alert-success text-center"
+             role="alert"
+             id="success-alert"
+        >
+            <p th:text="${success}">Success</p>
+        </div>
+
+        <div th:if="${error != null}"
+             style="position: fixed; top: 65px; right: 10px; z-index: 10;"
+             class="alert alert-danger text-center"
+             role="alert"
+             id="error-alert"
+        >
+            <p th:text="${error}">Error</p>
+        </div>
+
+        <script>
+            $("#success-alert").fadeOut(3000);
+            $("#error-alert").fadeOut(3000);
+        </script>
+
+        <div class="container-fluid">
+            <div class="d-flex">
+                <div class="mr-auto">
+                    <h2 class="display-4 my-3">All Subjects</h2>
+                </div>
+                <div class="mt-5">
+                    <a th:href="${'/admin/subject/add'}" class="btn btn-info">Add</a>
+                </div>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(subjects)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Name</th>
+                        <th class="lead">SubSubjects</th>
+                        <th class="lead">Edit</th>
+                        <th class="lead">Delete</th>
+                    </tr>
+                    <tr th:each="subject : ${subjects}">
+                        <td th:text="${subject.getId()}">Id</td>
+                        <td th:text="${subject.getName()}">Name</td>
+
+                        <td>
+                            <p th:each="subSubject : ${subject.getSubSubjects()}"
+                               th:text="${subSubject.getName()}"
+                            >
+                                SubSubject
+                            </p>
+                        </td>
+
+                        <td><a th:href="${'/admin/subject/edit/' + subject.getId()}" class="btn btn-primary">Edit</a></td>
+                        <td><a th:href="${'/admin/subject/delete/' + subject.getId()}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+insert into PROGRAM (id, mentor_uid, mentee_uid, description, start_date, accepted, request_accept, ended) values (0, 'ahmet', 'ali', 'mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus', 1597498668, true, true, false);
+insert into PROGRAM (id, mentor_uid, mentee_uid, description, start_date, accepted, request_accept, ended) values (1, 'ahmet', 'mehmet', 'ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum', 1597498078, true, true, false);
+insert into PROGRAM (id, mentor_uid, mentee_uid, description, start_date, accepted, request_accept, ended) values (2, 'ali', null, 'purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat', null, true, false, false);
+insert into PROGRAM (id, mentor_uid, mentee_uid, description, start_date, accepted, request_accept, ended) values (3, 'ali', null, 'bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at', null, false, false, false);
+insert into PROGRAM (id, mentor_uid, mentee_uid, description, start_date, accepted, request_accept, ended) values (4, 'mehmet', null, 'adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget', null, true, false, false);
+
+insert into SUBJECT (id, name) values (0, 'Virtual PC');
+insert into SUBJECT (id, name) values (1, 'CPA');
+insert into SUBJECT (id, name) values (2, 'Tax Returns');
+insert into SUBJECT (id, name) values (3, 'Grant Writing');
+insert into SUBJECT (id, name) values (4, 'JFace');
+insert into SUBJECT (id, name) values (5, 'PDS Frameworks');
+insert into SUBJECT (id, name) values (6, 'LEED AP');
+insert into SUBJECT (id, name) values (7, 'International Economics');
+insert into SUBJECT (id, name) values (8, 'AQL');
+insert into SUBJECT (id, name) values (9, 'OTN');
+
+insert into SUB_SUBJECT (id, subject_id, name) values (0, 2, 'IKEv2');
+insert into SUB_SUBJECT (id, subject_id, name) values (1, 4, 'Electrical Troubleshooting');
+insert into SUB_SUBJECT (id, subject_id, name) values (2, 0, 'Hlookups');
+insert into SUB_SUBJECT (id, subject_id, name) values (3, 0, 'Windows');
+insert into SUB_SUBJECT (id, subject_id, name) values (4, 1, 'Smart Grid');
+insert into SUB_SUBJECT (id, subject_id, name) values (5, 7, 'Team Mgmt');
+insert into SUB_SUBJECT (id, subject_id, name) values (6, 5, 'Mental Health');
+insert into SUB_SUBJECT (id, subject_id, name) values (7, 4, 'High Net Worth Individuals');
+insert into SUB_SUBJECT (id, subject_id, name) values (8, 4, 'Make vs Buy');
+insert into SUB_SUBJECT (id, subject_id, name) values (9, 7, 'Online Travel');
+insert into SUB_SUBJECT (id, subject_id, name) values (10, 2, 'Offshore Operations');
+insert into SUB_SUBJECT (id, subject_id, name) values (11, 9, 'Umbrellas');
+insert into SUB_SUBJECT (id, subject_id, name) values (12, 7, 'SNF');
+insert into SUB_SUBJECT (id, subject_id, name) values (13, 5, 'Company Set-up');
+insert into SUB_SUBJECT (id, subject_id, name) values (14, 9, 'JNCIP');
+insert into SUB_SUBJECT (id, subject_id, name) values (15, 0, 'Oncology');
+insert into SUB_SUBJECT (id, subject_id, name) values (16, 9, 'Ventilation');
+insert into SUB_SUBJECT (id, subject_id, name) values (17, 9, 'XAMPP');
+insert into SUB_SUBJECT (id, subject_id, name) values (18, 8, 'CQT');
+insert into SUB_SUBJECT (id, subject_id, name) values (19, 7, 'SRTP');
+insert into SUB_SUBJECT (id, subject_id, name) values (20, 3, 'Qmail');
+insert into SUB_SUBJECT (id, subject_id, name) values (21, 0, 'Digital Media');
+insert into SUB_SUBJECT (id, subject_id, name) values (22, 9, 'Swing');
+insert into SUB_SUBJECT (id, subject_id, name) values (23, 4, 'Tgrid');
+insert into SUB_SUBJECT (id, subject_id, name) values (24, 0, 'Frame Relay');
+
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (0, 0, 0, 2);
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (1, 0, 0, 3);
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (2, 1, 2, 0);
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (3, 2, 3, 20);
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (4, 3, 4, 7);
+insert into PROGRAM_SUBJECT (id, program_id, subject_id, sub_subject_id) values (5, 4, 5, 6);
+
+insert into PHASE (id, program_id, description, start_date, end_date, mentor_comment, mentor_point, mentee_comment, mentee_point, ended, started) values (0, 1, 'lorem ipsum', 1597502488, 1597502492, 'I am mentor. Mentee is not nice.', 2, 'I am mentee. Mentor is little bit nicer.', 3, true, true);
+insert into PHASE (id, program_id, description, start_date, end_date, mentor_comment, mentor_point, mentee_comment, mentee_point, ended, started) values (1, 1, 'lorem ipsum 2', 1597502495, 1597502492, null, null, null, null, false, false);

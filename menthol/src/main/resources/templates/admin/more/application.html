@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>Admin Dashboard - Applications</title>
+    </head>
+    <body>
+        <th:block th:include="admin/layout/header" />
+
+        <div class="container-fluid">
+            <h2 class="display-4 my-3">All Applications</h2>
+            <div th:if="${not #lists.isEmpty(programs)}">
+                <table class="table table-striped">
+                    <tr>
+                        <th class="lead">Id</th>
+                        <th class="lead">Mentor Id</th>
+                        <th class="lead">Mentee Id</th>
+                        <th class="lead">Subject</th>
+                        <th class="lead">SubSubject</th>
+                        <th class="lead">Description</th>
+                        <th class="lead">Start Date</th>
+                        <th class="lead">Accepted</th>
+                        <th class="lead">Accept</th>
+                        <th class="lead">Decline</th>
+                        <th class="lead">Phase</th>
+                    </tr>
+                    <tr th:each="program : ${programs}">
+                        <td th:text="${program.getId()}">Id</td>
+                        <td th:text="${program.getMentorUid()}">Mentor Id</td>
+                        <td th:text="${program.getMenteeUid()}">Mentee Id</td>
+
+                        <td th:text="${program.getProgramSubjects()[0].getSubject().getName()}">
+                            Subject
+                        </td>
+
+                        <td>
+                            <p th:each="programSubject : ${program.getProgramSubjects()}"
+                               th:text="${programSubject.getSubSubject().getName()}"
+                            >
+                                SubSubject
+                            </p>
+                        </td>
+
+                        <td th:text="${program.getDescription()}">Description</td>
+
+                        <td th:if="${program.getStartDate()} != null" th:text="${#dates.format(new java.util.Date(program.getStartDate() * 1000L), 'dd/MM/yyyy - HH:mm')}">Start Date</td>
+                        <td th:if="${program.getStartDate()} == null">Not Started</td>
+
+                        <td th:text="${program.getAccepted()}">Accepted</td>
+
+                        <div th:if="${program.getEnded()} == true and ${program.getRequestAccept()} == true">
+                            <td><p>Ended</p></td>
+                            <td><p>Ended</p></td>
+                            <td><a th:href="${'/admin/phase/list/' + program.getId()}" class="btn btn-info">Old Phase</a></td>
+                        </div>
+                        <div th:if="${program.getEnded()} == false and ${program.getAccepted()} == false and ${program.getRequestAccept()} == false">
+                            <td><a th:href="${'/admin/index/accept/' + program.getId()}" class="btn btn-success">Accept</a></td>
+                            <td><p>Not Accepted</p></td>
+                            <td><p>Not Accepted</p></td>
+                        </div>
+                        <div th:if="${program.getEnded()} == false and ${program.getAccepted()} == false and ${program.getRequestAccept()} == true">
+                            <td><a th:href="${'/admin/index/accept/' + program.getId()}" class="btn btn-success">Accept</a></td>
+                            <td><p>Declined after Started</p></td>
+                            <td><a th:href="${'/admin/phase/list/' + program.getId()}" class="btn btn-info">Phase</a></td>
+                        </div>
+                        <div th:if="${program.getEnded()} == false and ${program.getAccepted()} == true and ${program.getRequestAccept()} == true">
+                            <td><p>Accepted</p></td>
+                            <td><a th:href="${'/admin/index/decline/' + program.getId()}" class="btn btn-danger">Stop</a></td>
+                            <td><a th:href="${'/admin/phase/list/' + program.getId()}" class="btn btn-info">Phase</a></td>
+                        </div>
+                        <div th:if="${program.getEnded()} == false and ${program.getAccepted()} == true and ${program.getRequestAccept()} == false">
+                            <td><p>Accepted</p></td>
+                            <td><a th:href="${'/admin/index/decline/' + program.getId()}" class="btn btn-danger">Stop</a></td>
+                            <td><p>Not Started</p></td>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

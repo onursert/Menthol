@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Program Phase Edit</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container">
+            <div>
+                <h2 class="display-4 my-3">Edit Program Phase</h2>
+                <form class="form-horizontal" th:action="@{/user/phase/update}" method="post">
+                    <input type="hidden" class="form-control lead" th:value="${phase.getId()}" name="phaseId" required />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label lead" for="description">Description: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control lead" th:value="${phase.getDescription()}" id="description" name="description" required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 ml-3">
+                            <div class="form-group">
+                                <label class="control-label lead" for="startDate">Start Date: </label>
+                                <div>
+                                    <input type="date" min="1000-01-01" max="3000-12-31" class="form-control lead"
+                                           th:if="${phase.getStartDate()} != null"
+                                           th:value="${#dates.format(new java.util.Date(phase.getStartDate() * 1000L), 'yyyy-MM-dd')}"
+                                           id="startDate"
+                                           name="startDate"
+                                           required
+                                    />
+                                    <input type="date" min="1000-01-01" max="3000-12-31" class="form-control lead"
+                                           th:if="${phase.getStartDate()} == null"
+                                           id="startDate2"
+                                           name="startDate"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="startHour">Hour: </label>
+                                <input th:if="${phase.getStartDate()} == null" placeholder="00-23" type="text" class="form-control lead" id="startHour" name="startHour" required />
+                                <input th:if="${phase.getStartDate()} != null" th:value="${#dates.format(new java.util.Date(phase.getStartDate() * 1000L), 'HH')}" placeholder="00-23" type="text" class="form-control lead" id="startHour2" name="startHour" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="startMinute">Minute: </label>
+                                <input th:if="${phase.getStartDate()} == null" placeholder="00-59" type="text" class="form-control lead" id="startMinute" name="startMinute" required />
+                                <input th:if="${phase.getStartDate()} != null" th:value="${#dates.format(new java.util.Date(phase.getStartDate() * 1000L), 'mm')}" placeholder="00-59" type="text" class="form-control lead" id="startMinute2" name="startMinute" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 ml-3">
+                            <div class="form-group">
+                                <label class="control-label lead" for="endDate">End Date: </label>
+                                <div>
+                                    <input type="date" max="3000-12-31" min="1000-01-01" class="form-control lead"
+                                           th:if="${phase.getEndDate()} != null"
+                                           th:value="${#dates.format(new java.util.Date(phase.getEndDate() * 1000L), 'yyyy-MM-dd')}"
+                                           id="endDate"
+                                           name="endDate"
+                                           required
+                                    />
+                                    <input type="date" max="3000-12-31" min="1000-01-01" class="form-control lead"
+                                           th:if="${phase.getEndDate()} == null"
+                                           id="endDate2"
+                                           name="endDate"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="endHour">Hour: </label>
+                                <input th:if="${phase.getEndDate()} == null" placeholder="00-23" type="text" class="form-control lead" id="endHour" name="endHour" required />
+                                <input th:if="${phase.getEndDate()} != null" th:value="${#dates.format(new java.util.Date(phase.getEndDate() * 1000L), 'HH')}" placeholder="00-23" type="text" class="form-control lead" id="endHour2" name="endHour" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
+                                <label class="control-label lead" for="endMinute">Minute: </label>
+                                <input th:if="${phase.getEndDate()} == null" placeholder="00-59" type="text" class="form-control lead" id="endMinute" name="endMinute" required />
+                                <input th:if="${phase.getEndDate()} != null" th:value="${#dates.format(new java.util.Date(phase.getEndDate() * 1000L), 'mm')}" placeholder="00-59" type="text" class="form-control lead" id="endMinute2" name="endMinute" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

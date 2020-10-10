@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" th:href="@{/img/logo.png}" />
+        <title>User Dashboard - Mentor Application</title>
+    </head>
+    <body>
+        <th:block th:include="user/layout/header" />
+
+        <div class="container">
+            <div>
+                <h2 class="display-4 my-3">Mentor Application</h2>
+                <form class="form-horizontal" th:action="@{/user/mentor/application}" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label lead" for="description">Description: </label>
+                        <div class="col-sm-10">
+                            <textarea rows="3" name="description" class="form-control lead" id="description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label lead" for="subjectSelect">Subject: </label>
+                        <div class="col-sm-10">
+                            <select name="subjectIdName" class="form-control" id="subjectSelect">
+                                <option th:each="subject : ${subjects}" th:text="${subject.getId() + ' ' + subject.getName()}">
+                                    Subjects
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

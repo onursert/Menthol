@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation="http://www.springframework.org/schema/security
+                                 http://www.springframework.org/schema/security/spring-security.xsd
+                                 http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/user" access="hasRole('USER')"/>
+        <intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+
+        <form-login
+                default-target-url="/"
+                always-use-default-target="true"/>
+    </http>
+
+    <authentication-manager>
+        <ldap-authentication-provider
+                user-dn-pattern="uid={0},ou=people"
+                user-search-base="ou=people"
+                user-search-filter="uid={0}"
+                group-search-base="ou=groups"
+                group-search-filter="uniqueMember={0}">
+            <password-compare
+                    hash="{sha}"
+                    password-attribute="userPassword"/>
+        </ldap-authentication-provider>
+    </authentication-manager>
+
+    <beans:bean class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <beans:constructor-arg value="ldap://localhost:12345"/>
+        <beans:constructor-arg value="dc=obss,dc=com"/>
+    </beans:bean>
+
+</beans:beans>
